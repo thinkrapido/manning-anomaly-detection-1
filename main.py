@@ -5,7 +5,7 @@ from math import inf
 import numpy as np
 import pandas as pd
 import matplotlib
-matplotlib.use("GTK4Agg")
+matplotlib.use("Qt5Agg")
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
 from sklearn.metrics import RocCurveDisplay
@@ -14,49 +14,29 @@ from sklearn.svm import SVC
 
 def roc(true_labels, predictions):
 
-    condition = lambda x: 1 if x >= 0 else 0
+    actual = np.array(true_labels)
+    y_pred = np.array(predictions)
 
-    df = pd.DataFrame(np.array([true_labels, predictions]).T, columns=['true_labels', 'predictions'])
-    df['predictions'] = df['predictions'].map(condition)
+    idxs = np.argsort(predictions)[::-1]
+    
+    actual = actual[idxs]
+    y_pred = y_pred[idxs]
 
-    tp = len(df[(df['true_labels'] == 1) & (df['predictions'] == 1)])
-    tn = len(df[(df['true_labels'] == 0) & (df['predictions'] == 0)])
-    fp = len(df[(df['true_labels'] == 0) & (df['predictions'] == 1)])
-    fn = len(df[(df['true_labels'] == 1) & (df['predictions'] == 0)])
+    tpr, fpr = [], []
 
-    return fp/(fp + tn), tp/(tp + fn)
-
-# def roc_conceptual(true_labels, predictions, number_of_thresholds=1000):
-
-#     # 1. min prediction value
-
-#     # 2. max prediction values
-
-#     # 3. threshold points to be considered, 
-#     # the higher the value of number_threshold_points, the more threshold points should be sampled 
-#     thresholds = <CODE>
-
-#     # 4. somewhere to store the important results
-
-
-#     # definition of the positive class
-#     POSITIVE = 1
-
-#     # 5. Find the positive and negative cases
-#     pos = <CODE>
-
-#     neg = <CODE>
-
-#     # 6. Count the number of positive and negative cases
-#     num_positive_examples = <CODE>
-
-#     num_negative_examples = <CODE>
-
-#     for i, t in enumerate(thresholds):
-
-#         # 7. for every threshold get the false positive and true positive rates, pos and neg can be helpful
+    for threshold in np.unique(y_pred):
         
-#     return #8. false positive rate and true positive rate
+        prediction = y_pred >= threshold
+
+        tp = np.sum((actual == 1) & (prediction == 1))
+        tn = np.sum((actual == 0) & (prediction == 0))
+        fp = np.sum((actual == 0) & (prediction == 1))
+        fn = np.sum((actual == 1) & (prediction == 0))
+
+        tpr.append(tp / (tp + fn))
+        fpr.append(fp / (fp + tn))
+
+    return tpr, fpr
 
 
 

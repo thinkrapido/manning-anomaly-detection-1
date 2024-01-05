@@ -16,8 +16,8 @@ matplotlib = "^3.8.2"
 numpy = "^1.26.3"
 flake8 = "^6.1.0"
 statsmodels = "^0.14.1"
-PyGObject = "^3.46.0"
 pandas = "^2.1.4"
+pyqt5 = "^5.15.10"
 
 [tool.poetry.dev-dependencies]
 
