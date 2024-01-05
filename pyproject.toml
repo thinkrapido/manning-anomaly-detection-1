@@ -17,7 +17,7 @@ numpy = "^1.26.3"
 flake8 = "^6.1.0"
 statsmodels = "^0.14.1"
 pandas = "^2.1.4"
-pyqt5 = "^5.15.10"
+PyQt6 = "^6.6.1"
 
 [tool.poetry.dev-dependencies]
 

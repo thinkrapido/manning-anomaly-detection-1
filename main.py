@@ -5,7 +5,7 @@ from math import inf
 import numpy as np
 import pandas as pd
 import matplotlib
-matplotlib.use("Qt5Agg")
+matplotlib.use("qtagg")
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
 from sklearn.metrics import RocCurveDisplay
